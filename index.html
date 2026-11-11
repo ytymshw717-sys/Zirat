@@ -5128,7 +5128,7 @@ function evNow(){return EVS[Math.floor(Date.now()/14400000)%EVS.length];}
 var BD=[{nk:'שאדו',sx:.9,sy:1.1,tw:9.5},{nk:'ברזל',sx:1.15,sy:1,tw:13},{nk:'זאפ',sx:.95,sy:1.15,tw:10},{nk:'בלאק',sx:1.05,sy:1,tw:12},{nk:'בולט',sx:1.05,sy:1.05,tw:12},{nk:'זוק',sx:.9,sy:1.12,tw:9},{nk:'ראי',sx:.9,sy:1.08,tw:9.5},{nk:'ג׳ד',sx:1,sy:1.04,tw:11.5},{nk:'בום',sx:1.2,sy:.95,tw:13.5},{nk:'רקס',sx:1.2,sy:1.1,tw:13},{nk:'דרק',sx:.92,sy:1.12,tw:10},{nk:'נובא',sx:.92,sy:1,tw:10},{nk:'טנק',sx:1.3,sy:1.1,tw:14},{nk:'ניקי',sx:.9,sy:1.05,tw:9.5},{nk:'בו',sx:.85,sy:1.15,tw:8.5}];
 CH.forEach(function(c,i){Object.assign(c,BD[i]);});
 /* walk around rocks instead of pushing into them: pick the side of the rock that is closer to the goal and keep it for a moment */function mvAround(e,vx,vy,st){if(e.avT>0){e.avT-=st/Math.max(1,e.speed||60);var c=Math.cos(1.25*e.avS),n=Math.sin(1.25*e.avS),ax=vx*c-vy*n,ay=vx*n+vy*c;vx=ax;vy=ay;}else for(var k=0;k<obs.length;k++){var o=obs[k];if(o.k==='void')continue;var ox=o.x-e.x,oy=o.y-e.y,ah=ox*vx+oy*vy;if(ah>0&&ah<o.r+e.r+26){var cr=ox*vy-oy*vx;if(Math.abs(cr)<o.r+e.r){e.avS=cr>0?1:-1;e.avT=.45;var c2=Math.cos(1.25*e.avS),n2=Math.sin(1.25*e.avS),bx=vx*c2-vy*n2,by=vx*n2+vy*c2;vx=bx;vy=by;break;}}}e.x+=vx*st;e.y+=vy*st;}
-function pushOut(o){obs.forEach(function(b){var dx=o.x-b.x,dy=o.y-b.y,d=Math.hypot(dx,dy),m=b.r+(o.r||10)*.8;if(d<m&&d>.001){o.x=b.x+dx/d*m;o.y=b.y+dy/d*m;}});}
+function pushOut(o){var rr=(o.r||10)*.8;for(var it=0;it<4;it++){var hit=false;for(var bi=0;bi<obs.length;bi++){var b=obs[bi],dx=o.x-b.x,dy=o.y-b.y,d=Math.hypot(dx,dy),m=b.r+rr;if(d<m){hit=true;if(d>.001){o.x=b.x+dx/d*m;o.y=b.y+dy/d*m;}else{o.x=b.x+m;o.y=b.y;}}}if(!hit)break;}o.x=Math.max(o.r||10,Math.min(W-(o.r||10),o.x));o.y=Math.max(o.r||10,Math.min(H-(o.r||10),o.y));}
 function paintLotus(b,w){
  var sd=23;function rnd(){sd=(sd*16807)%2147483647;return sd/2147483647;}
  b.fillStyle='#2b3149';b.fillRect(0,0,W,H);
@@ -5660,7 +5660,7 @@ var NetP=(function(){
 
 var room=null,rm=null,ocode='',opeers=[],lastPres=0,hostNext=false,netMsg='',joinBusy=false;
 /* GAME_URL: the game's own web address (outside Claude). Fill it in after publishing the file, e.g. 'https://NAME.github.io/zirat/' */
-var NETVER='73',ART_URL='https://claude.ai/artifact/RyUPgXnkbWpaE4QZ2ZSzvQ',GAME_URL='https://ytymshw717-sys.github.io/Zirat/',pendRoom=null,badLink=false,hostAuto=false;
+var NETVER='74',ART_URL='https://claude.ai/artifact/RyUPgXnkbWpaE4QZ2ZSzvQ',GAME_URL='https://ytymshw717-sys.github.io/Zirat/',pendRoom=null,badLink=false,hostAuto=false;
 try{var hm=/^#room-([a-z0-9]{3,20})$/i.exec(location.hash||'');if(hm)pendRoom=hm[1].toLowerCase();else if(/^#room/i.test(location.hash||''))badLink=true;else if(location.hash==='#host')hostAuto=true;}catch(e){}
 function viaSite(){return inClaude()&&!!GAME_URL;}
 function siteA(u,t){return "<a href='"+u+"' target='_blank' rel='noopener' style='color:#fde047;font-weight:900;word-break:break-all'>"+t+"</a>";}
