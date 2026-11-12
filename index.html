@@ -5660,7 +5660,7 @@ var NetP=(function(){
 
 var room=null,rm=null,ocode='',opeers=[],lastPres=0,hostNext=false,netMsg='',joinBusy=false;
 /* GAME_URL: the game's own web address (outside Claude). Fill it in after publishing the file, e.g. 'https://NAME.github.io/zirat/' */
-var NETVER='74',ART_URL='https://claude.ai/artifact/RyUPgXnkbWpaE4QZ2ZSzvQ',GAME_URL='https://ytymshw717-sys.github.io/Zirat/',pendRoom=null,badLink=false,hostAuto=false;
+var NETVER='75',ART_URL='https://claude.ai/artifact/RyUPgXnkbWpaE4QZ2ZSzvQ',GAME_URL='https://ytymshw717-sys.github.io/Zirat/',pendRoom=null,badLink=false,hostAuto=false;
 try{var hm=/^#room-([a-z0-9]{3,20})$/i.exec(location.hash||'');if(hm)pendRoom=hm[1].toLowerCase();else if(/^#room/i.test(location.hash||''))badLink=true;else if(location.hash==='#host')hostAuto=true;}catch(e){}
 function viaSite(){return inClaude()&&!!GAME_URL;}
 function siteA(u,t){return "<a href='"+u+"' target='_blank' rel='noopener' style='color:#fde047;font-weight:900;word-break:break-all'>"+t+"</a>";}
@@ -5736,7 +5736,7 @@ function ngV(v,d){var t=typeof v;
  if(d>=3||v.nodeType||v.isObject3D||v instanceof HTMLElement)return undefined;
  if(Array.isArray(v)){if(v.length>48)return undefined;return v.map(function(x){var y=ngV(x,d+1);return y===undefined?null:y;});}
  var o={},n=0;for(var k in v){if(!Object.prototype.hasOwnProperty.call(v,k)||k.charCodeAt(0)===95)continue;var y=ngV(v[k],d+1);if(y!==undefined){o[k]=y;if(++n>40)break;}}return o;}
-function ngEnt(e){var o=ngV(e,0);if(o&&typeof o==='object'&&!Array.isArray(o))o.$i=ngId(e);return o;}
+function ngEnt(e){var o=ngV(e,0);if(o&&typeof o==='object'&&!Array.isArray(o)){o.$i=ngId(e);if(e.kn!=null){o.kn=e.kn|0;o.kix=Math.round(+e.kix||0);o.kiy=Math.round(+e.kiy||0);}}return o;}
 function ngSnap(full){
  NGA.forEach(function(n){ngA(n).forEach(function(e){if(e&&typeof e==='object')ngId(e);});});
  var S={t:'sn',q:++NG.sq,ht:Math.round(performance.now()),a:{},o:{},g:ngGlob(),ev:NG.acc};
